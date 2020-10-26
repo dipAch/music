@@ -13,10 +13,10 @@ from rest_framework import viewsets
 
 from mutecloud.models import (Song, Playlist, Album, Genre,
                               Recommendation, Artist)
-from mutecloud.serializers import (UserSerializer, # GroupSerializer,
-                                   SongSerializer, PlaylistSerializer,
-                                   GenreSerializer, AlbumSerializer,
-                                   RecommendationSerializer, ArtistSerializer)
+from mutecloud.serializers import (UserSerializer, SongSerializer,
+                                   PlaylistSerializer, GenreSerializer,
+                                   AlbumSerializer, RecommendationSerializer,
+                                   ArtistSerializer)
 
 
 class UserViewSet(viewsets.ModelViewSet):
