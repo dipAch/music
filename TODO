@@ -1,0 +1,9 @@
+VERY IMPORTANT:
+-----------
+- Add serializer validations for views.
+- Add Unit Tests.
+
+NOT DONE (ADVANCED ASPECTS):
+-----------
+- The system should be able to auto-suggest songs to a user based on the songs that are present in their playlist. Can match to a genre/album/artist
+— The system should also be able to group songs and form playlists on its own based on any condition
