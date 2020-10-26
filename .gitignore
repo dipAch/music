@@ -4,3 +4,4 @@ music_venv/
 *.pyc
 __pycache__/
 TODO
+README.md
