@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
-from rest_framework import permissions
+from rest_framework import permissions, renderers
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
@@ -29,6 +29,18 @@ class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all().order_by('-id')
     serializer_class = SongSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_renderers(self):
+        """Add BrowsableAPIRenderer if user is staff (regular users see JSONRenderer response)
+        """
+        # Explicitly set renderer to JSONRenderer (the default for non staff users)
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            # Staff users see browsable API
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
 
     def create(self, request, *args, **kwargs):
         raise MethodNotAllowed(request.method)
@@ -114,6 +126,14 @@ class RecommendationViewSet(viewsets.ModelViewSet):
     serializer_class = RecommendationSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_renderers(self):
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
+
     def list(self, request):
         recommendations = self.queryset.filter(
             for_user=request.user).all()
@@ -131,6 +151,14 @@ class AlbumViewSet(viewsets.ModelViewSet):
     queryset = Album.objects.all().order_by('-released_on')
     serializer_class = AlbumSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_renderers(self):
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
 
     def create(self, request, *args, **kwargs):
         raise MethodNotAllowed(request.method)
@@ -172,6 +200,14 @@ class GenreViewSet(viewsets.ModelViewSet):
     serializer_class = GenreSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_renderers(self):
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
+
     def create(self, request, *args, **kwargs):
         raise MethodNotAllowed(request.method)
 
@@ -212,6 +248,14 @@ class ArtistViewSet(viewsets.ModelViewSet):
     serializer_class = ArtistSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_renderers(self):
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
+
     def create(self, request, *args, **kwargs):
         raise MethodNotAllowed(request.method)
 
@@ -251,6 +295,14 @@ class PlaylistViewSet(viewsets.ModelViewSet):
     queryset = Playlist.objects.all().order_by('-created_on')
     serializer_class = PlaylistSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_renderers(self):
+        rends = [renderers.JSONRenderer]
+
+        if self.request.user.is_staff:
+            rends.append(renderers.BrowsableAPIRenderer)
+
+        return [renderer() for renderer in rends]
 
     def list(self, request):
         playlists = self.queryset.filter(user=self.request.user).all()
