@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User #, Group
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from mutecloud.models import (Song, Genre, Playlist, Album,
@@ -10,13 +10,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ['url', 'username', 'email', 'groups']
-
-
-# class GroupSerializer(serializers.HyperlinkedModelSerializer):
-
-#     class Meta:
-#         model = Group
-#         fields = ['url', 'name']
 
 
 class ArtistSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,8 +35,6 @@ class AlbumSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SongSerializer(serializers.HyperlinkedModelSerializer):
-    # album_name = serializers.CharField(read_only=True, source="album.name")
-    # genres = GenreSerializer(many=True)
 
     class Meta:
         model = Song

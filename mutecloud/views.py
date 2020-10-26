@@ -1,4 +1,8 @@
-from django.contrib.auth.models import User #, Group
+import os
+import sqlite3
+
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import transaction
 from rest_framework.decorators import action
 from rest_framework.exceptions import MethodNotAllowed
@@ -21,14 +25,6 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 
-# class GroupViewSet(viewsets.ModelViewSet):
-#     """API endpoint that allows groups to be viewed or edited.
-#     """
-#     queryset = Group.objects.all()
-#     serializer_class = GroupSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-
 class SongViewSet(viewsets.ModelViewSet):
     queryset = Song.objects.all().order_by('-id')
     serializer_class = SongSerializer
@@ -45,6 +41,29 @@ class SongViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         raise MethodNotAllowed(request.method)
+
+    @action(detail=False, url_path='search-song', methods=['get', 'post'])
+    @transaction.atomic
+    def search_song(self, request, pk=None, **kwargs):
+        data = {}
+
+        if request.method == 'POST':
+            conn = sqlite3.connect(
+                os.path.join(settings.BASE_DIR, "db.sqlite3"))
+            query = "SELECT * FROM search_song WHERE search_song MATCH ? ORDER BY rank"
+            arg = (request.data['search_query'],)
+            result = conn.execute(query, arg)
+            songs = self.queryset.filter(
+                id__in=set(map(lambda x: x[0], result.fetchall())))
+            serializer = self.serializer_class(
+                songs,
+                context={'request': request},
+                many=True)
+            data = serializer.data
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data=data)
 
     @action(detail=True, url_path='rate-song', methods=['get', 'put'])
     @transaction.atomic
