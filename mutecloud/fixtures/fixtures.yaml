@@ -124,3 +124,13 @@
       - 6
       - 9
     name: Linkin Park
+
+- model: mutecloud.Playlist
+  pk: 1
+  fields:
+    user: 1
+    songs:
+      - 1
+      - 4
+      - 5
+    name: Linkin-Park Mix Track
