@@ -1,0 +1,5 @@
+\.python-version
+db.sqlite3
+music_venv/
+*.pyc
+__pycache__/

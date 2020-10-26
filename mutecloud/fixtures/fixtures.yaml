@@ -1,0 +1,126 @@
+- model: mutecloud.genre
+  pk: 1
+  fields:
+    name: Pop
+- model: mutecloud.genre
+  pk: 2
+  fields:
+    name: Hip-hop & Rap
+- model: mutecloud.genre
+  pk: 3
+  fields:
+    name: Rock
+- model: mutecloud.genre
+  pk: 4
+  fields:
+    name: Dance and Electronic
+- model: mutecloud.genre
+  pk: 5
+  fields:
+    name: Latin
+- model: mutecloud.genre
+  pk: 6
+  fields:
+    name: Indie and Alternative Rock
+- model: mutecloud.genre
+  pk: 7
+  fields:
+    name: Classical
+- model: mutecloud.genre
+  pk: 8
+  fields:
+    name: Country
+- model: mutecloud.genre
+  pk: 9
+  fields:
+    name: Metal
+
+- model: mutecloud.album
+  pk: 1
+  fields:
+    name: Meteora
+    album_length: '36:35'
+    rating: 4
+    reviewers: 105000
+    genres:
+      - 2
+      - 3
+      - 4
+      - 6
+      - 9
+
+- model: mutecloud.song
+  pk: 1
+  fields:
+    album: 1
+    genres:
+      - 2
+      - 6
+    rating: 3
+    reviewers: 33000
+    name: Somewhere I Belong
+    song_length: '3:33'
+- model: mutecloud.song
+  pk: 2
+  fields:
+    album: 1
+    genres:
+      - 2
+      - 6
+      - 9
+    rating: 3
+    reviewers: 59000
+    name: Faint
+    song_length: '2:43'
+- model: mutecloud.song
+  pk: 3
+  fields:
+    album: 1
+    genres:
+      - 6
+      - 9
+    rating: 5
+    reviewers: 1090000
+    name: Numb
+    song_length: '3:06'
+- model: mutecloud.song
+  pk: 4
+  fields:
+    album: 1
+    genres:
+      - 3
+      - 9
+    rating: 2
+    reviewers: 3480
+    name: From the Inside
+    song_length: '2:55'
+- model: mutecloud.song
+  pk: 5
+  fields:
+    album: 1
+    genres:
+      - 2
+      - 4
+    rating: 3
+    reviewers: 18077
+    name: Breaking the Habit
+    song_length: '3:16'
+
+- model: mutecloud.artist
+  pk: 1
+  fields:
+    albums:
+      - 1
+    songs:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    genres:
+      - 2
+      - 3
+      - 4
+      - 6
+      - 9
+    name: Linkin Park
